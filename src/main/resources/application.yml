@@ -1,0 +1,53 @@
+---
+micronaut:
+  application:
+    name: micronaut
+  server:
+    netty:
+      worker:
+        threads: 4
+    cors:
+      enabled: true
+  executors:
+    io:
+      nThreads: 50
+      type: fixed
+  io:
+    watch:
+      paths: src/main
+      restart: true
+
+---
+micronaut:
+  security:
+    enabled: true
+    endpoints:
+      login:
+        enabled: true
+      oauth:
+        enabled: true
+    token:
+      jwt:
+        enabled: true
+        signatures:
+          secret:
+            generator:
+              secret: "${JWT_SECRET:DefaultJWTDevEnvironmentSecretThisCharactersExistsJustForTheMinimumLength}"
+
+---
+datasources:
+  default:
+    url: jdbc:mysql://localhost:3306/testDatabase?useSSL=false&createDatabaseIfNotExists=true
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: root
+    schema-generate: CREATE_DROP
+    dialect: MYSQL
+    password: ''
+
+#jpa:
+#  default:
+#    properties:
+#      hibernate:
+#        hbm2ddl:
+#          auto: update
+
